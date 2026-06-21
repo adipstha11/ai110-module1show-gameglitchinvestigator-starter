@@ -14,10 +14,10 @@ Document at least 3 bugs you found. Add rows as needed.
 
 | Input | Expected Behavior | Actual Behavior | Console Output / Error |
 |-------|-------------------|-----------------|------------------------|
-| | | | |
-| | | | |
-| | | | |
-
+| Guess is too high or too low | If too high, say “go lower.” If too low, say “go higher.” | The game gives the opposite hint both ways. | No console error; logic is incorrect. |
+| Select Easy, Medium, Hard | Easy should have most guesses, Medium fewer, Hard least. | Easy = 6, Medium = 8, Hard = 4, so the order is wrong. | No console error; difficulty settings are incorrect. |
+| Finish game and click Restart Game | Game should fully reset and start a new round. | Restart button does not properly restart the game. | No console error; restart functionality is broken. |
+| inputting answer | should just take in input and increase attempt if wrong| some times the submit answer button doesnt process command| just does not process command|
 ---
 
 ## 2. How did you use AI as a teammate?
