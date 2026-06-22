@@ -25,28 +25,45 @@ It wrote the code, ran away, and now the game is unplayable.
 
 ## 📝 Document Your Experience
 
-- [ ] Describe the game's purpose.
-- [ ] Detail which bugs you found.
-- [ ] Explain what fixes you applied.
+**Game purpose:** A number guessing game where the player tries to guess a secret number. The game gives "Too High" or "Too Low" hints after each guess and tracks the score across rounds.
+
+**Bugs found:**
+1. **Hint logic reversed** — "Too High" returned when guess was below secret, "Too Low" when above.
+2. **Difficulty settings wrong** — Easy=6, Medium=8, Hard=4 guesses. Order was incorrect; Easy should allow the most guesses.
+3. **Secret number changed on every submit** — No session state, so each button click regenerated a new secret number.
+4. **Restart broken** — Restart button did not fully clear session state, leaving stale values.
+
+**Fixes applied:**
+1. Swapped the `>` / `<` comparison in `check_guess` so hints match the correct direction.
+2. Corrected the max-guesses mapping for each difficulty level.
+3. Stored the secret number in `st.session_state` so it persists across button clicks.
+4. Reset all relevant session state keys in the restart handler.
 
 ## 📸 Demo Walkthrough
 
-Describe your fixed game in numbered steps so a reader can follow along without watching a video:
-
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
-
-**Screenshot** *(optional)*: <!-- Insert a screenshot of your fixed, winning game here -->
+1. User starts a new game on Easy difficulty (10 max guesses). Secret number is 53.
+2. User enters a guess of 30 → game returns "Too Low".
+3. User enters a guess of 80 → game returns "Too High".
+4. Score counter updates after each guess, showing attempts used.
+5. User enters a guess of 53 → game returns "You Win! 🎉" and the round score is recorded.
+6. User clicks "Restart Game" → session state clears, a new secret number is generated, and a fresh round begins.
 
 ## 🧪 Test Results
 
 ```
-# Paste your pytest output here, e.g.:
-# pytest tests/
-# ========================= X passed in 0.XXs =========================
+$ python -m pytest tests/ -v
+============================= test session starts ==============================
+platform darwin -- Python 3.12.7, pytest-7.4.4, pluggy-1.6.0
+collecting ... collected 6 items
+
+tests/test_game_logic.py::test_winning_guess PASSED                      [ 16%]
+tests/test_game_logic.py::test_guess_too_high PASSED                     [ 33%]
+tests/test_game_logic.py::test_guess_too_low PASSED                      [ 50%]
+tests/test_game_logic.py::test_secret_as_string PASSED                   [ 66%]
+tests/test_game_logic.py::test_guess_too_high_with_string_secret PASSED  [ 83%]
+tests/test_game_logic.py::test_guess_too_low_with_string_secret PASSED   [100%]
+
+============================== 6 passed in 0.02s ===============================
 ```
 
 ## 🚀 Stretch Features
